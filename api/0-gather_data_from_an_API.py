@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""returns information about his/her"""
+
 
 import requests
 from sys import argv
