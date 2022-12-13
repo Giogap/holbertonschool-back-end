@@ -23,6 +23,6 @@ if __name__=="__main__":
             task_done += 1
             list_tasks.append(task['title'])
 
-
+    employee = url_user.json()['name']
 
     print("Employee {} is done with tasks({}/{}):".format(task_done, total_tasks))
