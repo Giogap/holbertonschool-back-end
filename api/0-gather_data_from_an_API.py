@@ -25,4 +25,7 @@ if __name__=="__main__":
 
     employee = url_user.json()['name']
 
-    print("Employee {} is done with tasks({}/{}):".format(task_done, total_tasks))
+    print("Employee {} is done with tasks({}/{}):".format(employee, task_done, total_tasks))
+
+    for title in list_tasks:
+        print('\t {}'.format(title))
