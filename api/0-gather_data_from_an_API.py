@@ -12,6 +12,7 @@ if __name__=="__main__":
     url_user = get("https://jsonplaceholder.typicode.com/users").json()
     url_todos = get("https://jsonplaceholder.typicode.com/todos").json()
 
+
     total_tasks = 0
     task_done = 0
     list_tasks = []
@@ -21,3 +22,7 @@ if __name__=="__main__":
         if task['completed'] is True:
             task_done += 1
             list_tasks.append(task['title'])
+
+
+
+    print("Employee {} is done with tasks({}/{}):".format(task_done, total_tasks))
