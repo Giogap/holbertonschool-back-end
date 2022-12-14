@@ -1,42 +1,38 @@
+
 #!/usr/bin/python3
 """
-returning info from REST API
+JSON output
 """
 
+import json
 import requests
-import sys
+
 
 users_url = "https://jsonplaceholder.typicode.com/users"
 todos_url = "https://jsonplaceholder.typicode.com/todos"
 
 
-def first_line(id):
-    """ func return inf api"""
-    todos_count = 0
-    todos_done = 0
-    task = []
+def user_info():
+    """ Doc """
 
     resp = requests.get(todos_url).json()
     resp_user = requests.get(users_url).json()
 
-    name = None
+    final_json = {}
+
     for i in resp_user:
-        if i['id'] == id:
-            name = i['name']
+        ourdata = []
+        for j in resp:
 
-    for i in resp:
-        if i['userId'] == id:
-            todos_count += 1
-        """print(todos_count)"""
-        if (i['completed'] and i['userId'] == id):
-            todos_done += 1
-            task.append(i['title'])
+            json_entry = {'username': resp_user[0]['username'],
+                          'task': j['title'], 'completed': j['completed']}
+            if i['id'] == j['userId']:
+                ourdata.append(json_entry)
+        final_json[i['id']] = ourdata
 
-    print('Employee {} is done with tasks({}/{}):'.format(
-        name, todos_done, todos_count))
-    for i in task:
-        print('\t ' + i)
+    with open("todo_all_employees.json", "w") as f:
+        f.write(json.dumps(final_json))
 
 
 if __name__ == "__main__":
-    first_line(int(sys.argv[1]))
+    user_info()
