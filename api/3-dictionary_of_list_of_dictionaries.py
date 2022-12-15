@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 JSON output
@@ -8,30 +7,30 @@ import json
 import requests
 
 
-users_url = "https://jsonplaceholder.typicode.com/users"
-todos_url = "https://jsonplaceholder.typicode.com/todos"
+url_users = "https://jsonplaceholder.typicode.com/users"
+url_todos = "https://jsonplaceholder.typicode.com/todos"
 
 
 def user_info():
     """ Doc """
 
-    resp = requests.get(todos_url).json()
-    resp_user = requests.get(users_url).json()
+    todos = requests.get(url_todos).json()
+    users = requests.get(url_users).json()
 
     final_json = {}
 
-    for i in resp_user:
-        ourdata = []
-        for j in resp:
+    for user in users:
+        taskList = []
+        for task in todos:
+            if task.get('userId') == user.get('id'):
+                taskDict = {"username": user.get('username'),
+                            "task": task.get('title'),
+                            "completed": task.get('completed')}
+                taskList.append(taskDict)
+        final_json[user.get('id')] = taskList
 
-            json_entry = {'username': resp_user[0]['username'],
-                          'task': j['title'], 'completed': j['completed']}
-            if i['id'] == j['userId']:
-                ourdata.append(json_entry)
-        final_json[i['id']] = ourdata
-
-    with open("todo_all_employees.json", "w") as f:
-        f.write(json.dumps(final_json))
+    with open('todo_all_employees.json', mode='w') as f:
+        json.dump(final_json, f)
 
 
 if __name__ == "__main__":
